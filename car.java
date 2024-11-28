@@ -8,7 +8,7 @@ public class car extends JPanel {
     private int roadBaseY = 600;
     private int roadWidthTop = 100;
     private int roadWidthBase = 300;
-    private int curveAmplitude = 100;
+    private int curveAmplitude = 200;
     private double curveSpeed = 0.05;
 
     public static void main(String[] args) {
@@ -47,24 +47,15 @@ public class car extends JPanel {
 
         // Triângulo principal (estrada)
         int centerX = getWidth() / 2;
-        Path2D mainRoad = new Path2D.Double();
-        mainRoad.moveTo(centerX - roadWidthTop / 2, roadTopY);  // Topo esquerdo
-        mainRoad.lineTo(centerX + roadWidthTop / 2, roadTopY);  // Topo direito
-        mainRoad.lineTo(centerX + roadWidthBase / 2, roadBaseY);  // Base direita
-        mainRoad.lineTo(centerX - roadWidthBase / 2, roadBaseY);  // Base esquerda
-        mainRoad.closePath();
-        g2d.setColor(Color.GRAY);
-        g2d.fill(mainRoad);
-
+        
         // Triângulo invertido (curvas)
         double curveOffset = Math.sin(frame * curveSpeed) * curveAmplitude;
         Path2D curve = new Path2D.Double();
-        curve.moveTo(centerX - roadWidthTop / 2, roadTopY);  // Topo esquerdo
-        curve.lineTo(centerX + roadWidthTop / 2, roadTopY);  // Topo direito
+        curve.moveTo(centerX - roadWidthTop * 3, roadBaseY);  // Topo esquerdo
+        curve.lineTo(centerX + roadWidthTop * 3, roadBaseY);  // Topo direito
         curve.lineTo(centerX + curveOffset, roadTopY - 100);  // Ponta invertida
         curve.closePath();
         g2d.setColor(Color.WHITE);
         g2d.fill(curve);
     }
 }
-
