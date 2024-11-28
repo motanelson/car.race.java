@@ -10,7 +10,8 @@ public class car extends JPanel {
     private int roadWidthBase = 300;
     private int curveAmplitude = 300;
     private double curveSpeed = 0.05;
-
+    double curveOffset =0;
+   
     public static void main(String[] args) {
         JFrame frame = new JFrame("Estrada com Curvas");
         car panel = new car();
@@ -45,7 +46,11 @@ public class car extends JPanel {
         int horizonY = 50;
         g2d.drawLine(0, horizonY, getWidth(), horizonY);
         roadTopY=roadTopY+20;
-        if(roadTopY>roadBaseY-100)roadTopY=100;
+        if(roadTopY>roadBaseY-100){
+            roadTopY=100;
+            curveOffset = Math.sin(frame * curveSpeed) * curveAmplitude;
+            //curve = new Path2D.Double();
+        }
         // Triângulo principal (estrada)
         int centerX = getWidth() / 2;
         Path2D mainRoad = new Path2D.Double();
@@ -58,8 +63,7 @@ public class car extends JPanel {
         g2d.fill(mainRoad);
 
         // Triângulo invertido (curvas)
-        double curveOffset = Math.sin(frame * curveSpeed) * curveAmplitude;
-        Path2D curve = new Path2D.Double();
+         Path2D curve =new Path2D.Double();
         curve.moveTo(centerX - roadWidthTop / 2, roadTopY);  // Topo esquerdo
         curve.lineTo(centerX + roadWidthTop / 2, roadTopY);  // Topo direito
         curve.lineTo(centerX + curveOffset, 50) ;// Ponta invertida
