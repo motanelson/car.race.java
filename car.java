@@ -66,7 +66,8 @@ public class car extends JPanel {
          Path2D curve =new Path2D.Double();
         curve.moveTo(centerX - roadWidthTop / 2, roadTopY);  // Topo esquerdo
         curve.lineTo(centerX + roadWidthTop / 2, roadTopY);  // Topo direito
-        curve.lineTo(centerX + curveOffset, 50) ;// Ponta invertida
+        curve.lineTo(centerX + curveOffset+50, 50) ;// Ponta invertida
+        curve.lineTo(centerX + curveOffset-50, 50) ;// Ponta invertida
         curve.closePath();
         g2d.setColor(Color.WHITE);
         g2d.fill(curve);
