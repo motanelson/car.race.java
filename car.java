@@ -11,6 +11,7 @@ public class car extends JPanel {
     private int curveAmplitude = 300;
     private double curveSpeed = 0.05;
     double curveOffset =0;
+    double roadplus=40;
    
     public static void main(String[] args) {
         JFrame frame = new JFrame("Estrada com Curvas");
@@ -36,7 +37,7 @@ public class car extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-
+        int centerX = getWidth() / 2;
         // Fundo preto
         g2d.setColor(Color.BLACK);
         g2d.fillRect(0, 0, getWidth(), getHeight());
@@ -47,12 +48,13 @@ public class car extends JPanel {
         g2d.drawLine(0, horizonY, getWidth(), horizonY);
         roadTopY=roadTopY+20;
         if(roadTopY>roadBaseY-100){
-            roadTopY=100;
-            curveOffset = Math.sin(frame * curveSpeed) * curveAmplitude;
-            //curve = new Path2D.Double();
+            roadTopY=50;
+            curveOffset = curveOffset + roadplus;
+            if(curveOffset>(centerX*2)+centerX)roadplus=-40;
+            if(curveOffset<-(centerX))roadplus=+40;
         }
         // Triângulo principal (estrada)
-        int centerX = getWidth() / 2;
+       
         Path2D mainRoad = new Path2D.Double();
         mainRoad.moveTo(centerX - roadWidthTop / 2, roadTopY);  // Topo esquerdo
         mainRoad.lineTo(centerX + roadWidthTop / 2, roadTopY);  // Topo direito
@@ -66,8 +68,8 @@ public class car extends JPanel {
          Path2D curve =new Path2D.Double();
         curve.moveTo(centerX - roadWidthTop / 2, roadTopY);  // Topo esquerdo
         curve.lineTo(centerX + roadWidthTop / 2, roadTopY);  // Topo direito
-        curve.lineTo(centerX + curveOffset+50, 50) ;// Ponta invertida
-        curve.lineTo(centerX + curveOffset-50, 50) ;// Ponta invertida
+        curve.lineTo( curveOffset+50, 50) ;// Ponta invertida
+        curve.lineTo( curveOffset-50, 50) ;// Ponta invertida
         curve.closePath();
         g2d.setColor(Color.WHITE);
         g2d.fill(curve);
